@@ -1,11 +1,26 @@
+import java.util.Arrays;
+
 public class Exercises {
 
     /*
         complete this function to check if the input number is prime or not
      */
     public boolean isPrime(long n) {
-        // todo
-        return false;
+        if (n <= 1) {
+            return false;
+        }
+        if (n <= 3) {
+            return true;
+        }
+        if (n % 2 == 0 || n % 3 == 0) {
+            return false;
+        }
+        for (long i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /*
@@ -15,8 +30,27 @@ public class Exercises {
         if the input is not a fibonacci number with description above, return -1
      */
     public long fibonacciIndex(long n) {
-        // todo
-        return -1;
+        if (n == 0) {
+            return 0; // 0 index 0
+        }
+        if (n == 1) {
+            return 1; // 1 index 1
+        }
+
+        long a = 0, b = 1;
+        long index = 1;
+
+        while (b <= n) {
+            if (b == n) {
+                return index;
+            }
+            long next = a + b;
+            a = b;
+            b = next;
+            index++;
+        }
+
+        return -1; //BUG
     }
 
     /*
@@ -38,11 +72,39 @@ public class Exercises {
         the output has to be a two-dimensional array of characters, so don't just print the triangle!
      */
     public char[][] generateTriangle(int n) {
-        // todo
-        return null;
+        if (n <= 0) {
+            return new char[0][0];
+        }
+
+        char[][] triangle = new char[n][];
+
+        for (int i = 0; i < n; i++) {
+            // create row
+            triangle[i] = new char[i + 1];
+
+            // every row 1 at start 1 at end
+            triangle[i][0] = '*';
+            triangle[i][i] = '*';
+
+            // middle rows 1 at start 1 at end
+            if (i > 1) {
+                for (int j = 1; j < i; j++) {
+                    triangle[i][j] = ' ';
+                }
+            }
+
+            // Last row
+            if (i == n - 1) {
+                for (int j = 0; j <= i; j++) {
+                    triangle[i][j] = '*';
+                }
+            }
+        }
+
+        return triangle;
     }
 
     public static void main(String[] args) {
-        // you can test your code here, but then it should be checked with test cases
+        System.out.println(Arrays.deepToString(new Exercises().generateTriangle(5)));
     }
 }
